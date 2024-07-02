@@ -10,3 +10,18 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+.title-image {
+  width: 50%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+#search-bar {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}

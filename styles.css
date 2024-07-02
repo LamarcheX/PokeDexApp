@@ -25,3 +25,17 @@ body {
   border-radius: 5px;
   font-size: 16px;
 }
+
+.pokedex-container {
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}

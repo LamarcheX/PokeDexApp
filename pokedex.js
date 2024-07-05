@@ -39,3 +39,46 @@ const fetchAllPokemon = async () => {
     // Mostramos todos los Pokémon obtenidos.
     displayAllPokemon(allPokemon);
 };
+
+// Función para mostrar todos los Pokémon en el contenedor.
+const displayAllPokemon = (pokemonList) => {
+    // Limpiamos el contenido del contenedor de Pokémon.
+    pokemonContainer.innerHTML = '';
+    // Recorremos la lista de Pokémon y mostramos cada uno.
+    pokemonList.forEach(pokemon => displayPokemon(pokemon));
+};
+
+// Función para crear y mostrar la tarjeta de un Pokémon específico.
+const displayPokemon = (pokemon) => {
+    // Creamos un elemento div para la tarjeta del Pokémon.
+    const pokemonCard = document.createElement('div');
+    // Añadimos la clase CSS 'pokemon-card' al div.
+    pokemonCard.classList.add('pokemon-card');
+
+    // Obtenemos las habilidades del Pokémon y las convertimos en una cadena.
+    const abilities = pokemon.abilities.map(ability => ability.ability.name).join(', ');
+    // Mapeamos las estadísticas del Pokémon a un nuevo formato.
+    const stats = pokemon.stats.map(stat => ({
+        name: stat.stat.name,
+        base_stat: stat.base_stat
+    }));
+
+    // Creamos el HTML interno para la tarjeta del Pokémon.
+    const pokemonInnerHTML = `
+        <div class="number">#${pokemon.id.toString().padStart(3, '0')}</div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" alt="${pokemon.name}">
+        <h2>${pokemon.name}</h2>
+        <p>Type: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+        <p>Abilities: ${abilities}</p>
+        <div class="stats">
+            <canvas id="chart-${pokemon.id}"></canvas>
+        </div>
+    `;
+
+    // Asignamos el HTML interno al div de la tarjeta.
+    pokemonCard.innerHTML = pokemonInnerHTML;
+    // Añadimos la tarjeta del Pokémon al contenedor de Pokémon.
+    pokemonContainer.appendChild(pokemonCard);
+    // Creamos un gráfico de estadísticas para el Pokémon.
+    createChart(`chart-${pokemon.id}`, stats);
+};

@@ -29,3 +29,13 @@ const fetchPokemon = async (id) => {
     allPokemon.push(pokemon);
 };
 
+// Función asíncrona para obtener todos los Pokémon desde 1 hasta numberOfPokemon.
+const fetchAllPokemon = async () => {
+    // Usamos un bucle for para obtener cada Pokémon por su ID.
+    for (let i = 1; i <= numberOfPokemon; i++) {
+        // Esperamos a que se obtenga el Pokémon antes de continuar con el siguiente.
+        await fetchPokemon(i);
+    }
+    // Mostramos todos los Pokémon obtenidos.
+    displayAllPokemon(allPokemon);
+};

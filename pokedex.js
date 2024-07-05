@@ -82,3 +82,69 @@ const displayPokemon = (pokemon) => {
     // Creamos un gráfico de estadísticas para el Pokémon.
     createChart(`chart-${pokemon.id}`, stats);
 };
+
+// Función para crear un gráfico utilizando Chart.js
+const createChart = (canvasId, stats) => {
+    // Obtenemos el contexto del canvas por su ID.
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    // Creamos un nuevo gráfico de tipo pie.
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            // Etiquetas para el gráfico basadas en las estadísticas.
+            labels: stats.map(stat => stat.name),
+            datasets: [{
+                // Datos para el gráfico basados en las estadísticas.
+                data: stats.map(stat => stat.base_stat),
+                // Colores de fondo para cada sección del gráfico.
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                // Colores de borde para cada sección del gráfico.
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1 // Ancho del borde.
+            }]
+        },
+        options: {
+            responsive: true, // Hacer que el gráfico sea responsivo.
+            maintainAspectRatio: false, // No mantener la relación de aspecto.
+            plugins: {
+                legend: {
+                    position: 'top', // Posición de la leyenda o info del grafico.
+                },
+                // Tooltip es para ver man info cuando se pasa el mouse por encima del grafico
+                tooltip: {
+                    callbacks: {
+                        // Función que personaliza la etiqueta de la tooltip, añadiendo el nombre y valor de la estadística.
+                        label: function (context) { // Recibe el context del tooltip
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            // Añade el valor de los datos a la etiqueta.
+                            if (context.parsed !== null) {
+                                label += context.parsed;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+};
+
+// Llamamos a la función para obtener todos los Pokémon cuando se carga la página.
+fetchAllPokemon();
